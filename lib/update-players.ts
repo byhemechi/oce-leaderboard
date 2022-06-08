@@ -5,13 +5,13 @@ import getTrackedCountries from "./get-scanning-countries.ts";
 
 export default async function updatePlayers() {
   const countries = getTrackedCountries();
-  for (let page = 1; page <= 1; ++page) {
+  for (let page = 1; page <= 20; ++page) {
     const pageData = await getLeaderboard(
       countries?.map((i) => i.name) ?? [],
       page
     );
     if (pageData == null) break;
-    console.log(`page ${page}`);
+    console.log(`Updated page ${page}`);
 
     await supabase.from("player").upsert(
       pageData.players.map((data) => ({
@@ -38,6 +38,7 @@ export default async function updatePlayers() {
           const playerData = await getPlayer(player?.toString() ?? "");
           if (playerData === null) return null;
           playerData.country = country;
+          console.log(`Updated player ${player}`);
           return playerData;
         })
       )
