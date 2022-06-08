@@ -7,6 +7,7 @@ export default async function updatePlayers() {
   const countries = getTrackedCountries();
   const pages = 20;
   const log: string[] = [];
+  console.log("Updating player data...");
 
   const extraPlayers =
     countries
