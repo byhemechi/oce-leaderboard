@@ -56,7 +56,11 @@ const PlayerTable = ({
                 class={tw`flex h-8 items-center gap-2`}
               >
                 <img
-                  src={`https://cdn.scoresaber.com/avatars/${player.scoresaber_id}.jpg`}
+                  src={
+                    player.scoresaber_id.startsWith("7")
+                      ? `https://cdn.scoresaber.com/avatars/${player.scoresaber_id}.jpg`
+                      : "https://cdn.scoresaber.com/avatars/oculus.png"
+                  }
                   class={tw`h-8 w-8 rounded-full`}
                   alt="avatar"
                   loading="lazy"
