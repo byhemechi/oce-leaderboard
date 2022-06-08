@@ -5,20 +5,24 @@ import getTrackedCountries from "./get-scanning-countries.ts";
 
 export default async function updatePlayers() {
   const countries = getTrackedCountries();
-  for (let page = 1; page <= 20; ++page) {
-    const pageData = await getLeaderboard(
-      countries?.map((i) => i.name) ?? [],
-      page
-    );
-    if (pageData == null) break;
-    console.log(`Updated page ${page}`);
+  const pages = 20;
 
-    await supabase.from("player").upsert(
-      pageData.players.map((data) => ({
-        data,
-      }))
-    );
-  }
+  Promise.all(
+    new Array(20).fill(null).map(async (_i, page) => {
+      const pageData = await getLeaderboard(
+        countries?.map((i) => i.name) ?? [],
+        page + 1
+      );
+      if (pageData == null) return null;
+      console.log(`Updated page ${page + 1}`);
+
+      await supabase.from("player").upsert(
+        pageData.players.map((data) => ({
+          data,
+        }))
+      );
+    })
+  );
 
   const extraPlayers =
     countries
