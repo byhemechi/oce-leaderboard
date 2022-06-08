@@ -30,51 +30,53 @@ const PlayerTable = ({
   players: PlayerBasic[];
   page: number;
 }) => (
-  <div class={tw`max-w-screen-lg mx-auto`}>
-    <Helmet>
-      <title>
-        OCE Beat Saber Leaderboard{page > 0 ? ` page ${page + 1}` : ""}
-      </title>
-      <link rel="shortcut icon" href="/OCEBeatSaber.svg" />
-    </Helmet>
-    <Pagination page={page} />
-    <table class={tw`w-full`}>
-      <thead>
-        <tr class={tw`text-left border-b-2`}>
-          <th>#</th>
-          <th class={tw`py-2`}>Name</th>
-          <th class={tw`text-right`}>PP</th>
-        </tr>
-      </thead>
-      <tbody>
-        {players.map((player) => (
-          <tr class={tw`border-b-2`}>
-            <td>{player.rank}</td>
-            <td class={tw`py-2`}>
-              <a
-                href={`https://scoresaber.com/u/${player.scoresaber_id}`}
-                class={tw`flex h-8 items-center gap-2`}
-              >
-                <img
-                  src={
-                    player.scoresaber_id.startsWith("7")
-                      ? `https://cdn.scoresaber.com/avatars/${player.scoresaber_id}.jpg`
-                      : "https://cdn.scoresaber.com/avatars/oculus.png"
-                  }
-                  class={tw`h-8 w-8 rounded-full`}
-                  alt="avatar"
-                  loading="lazy"
-                />
-                <span>{toEmojiFlag(player.country)}</span>
-                <span>{player.name}</span>
-              </a>
-            </td>
-            <td class={tw`text-right`}>{player.pp}</td>
+  <div class={tw`min-h-screen dark:bg-gray-900 dark:text-gray-200`}>
+    <div class={tw`max-w-screen-lg mx-auto`}>
+      <Helmet>
+        <title>
+          OCE Beat Saber Leaderboard{page > 0 ? ` page ${page + 1}` : ""}
+        </title>
+        <link rel="shortcut icon" href="/OCEBeatSaber.svg" />
+      </Helmet>
+      <Pagination page={page} />
+      <table class={tw`w-full`}>
+        <thead>
+          <tr class={tw`text-left border-b-2 dark:border-gray-800`}>
+            <th>#</th>
+            <th class={tw`py-2`}>Name</th>
+            <th class={tw`text-right`}>PP</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-    <Pagination page={page} />
+        </thead>
+        <tbody>
+          {players.map((player) => (
+            <tr class={tw`border-b-2 dark:border-gray-800`}>
+              <td>{player.rank}</td>
+              <td class={tw`py-2`}>
+                <a
+                  href={`https://scoresaber.com/u/${player.scoresaber_id}`}
+                  class={tw`flex h-8 items-center gap-2`}
+                >
+                  <img
+                    src={
+                      player.scoresaber_id.startsWith("7")
+                        ? `https://cdn.scoresaber.com/avatars/${player.scoresaber_id}.jpg`
+                        : "https://cdn.scoresaber.com/avatars/oculus.png"
+                    }
+                    class={tw`h-8 w-8 rounded-full`}
+                    alt="avatar"
+                    loading="lazy"
+                  />
+                  <span>{toEmojiFlag(player.country)}</span>
+                  <span>{player.name}</span>
+                </a>
+              </td>
+              <td class={tw`text-right`}>{player.pp}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Pagination page={page} />
+    </div>
   </div>
 );
 
