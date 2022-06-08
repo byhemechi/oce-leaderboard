@@ -1,4 +1,4 @@
-import { components } from "../scoresaber";
+import { components } from "../scoresaber.ts";
 
 export default async function getPlayer(id: string) {
   const response = await fetch(`https://scoresaber.com/api/player/${id}/basic`);

@@ -1,9 +1,6 @@
-import { components } from "../scoresaber";
+import { components } from "../scoresaber.ts";
 
-export default async function getLeaderboard(
-  countries: string[],
-  page: number = 1
-) {
+export default async function getLeaderboard(countries: string[], page = 1) {
   const url = new URL(`https://scoresaber.com/api/players`);
   url.searchParams.set("countries", countries.join(","));
   url.searchParams.set("page", page.toString());

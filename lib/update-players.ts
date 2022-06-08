@@ -1,7 +1,7 @@
-import supabase from "./client";
-import getLeaderboard from "./get-leaderboard";
-import getPlayer from "./get-player";
-import getTrackedCountries from "./get-scanning-countries";
+import supabase from "./client.ts";
+import getLeaderboard from "./get-leaderboard.ts";
+import getPlayer from "./get-player.ts";
+import getTrackedCountries from "./get-scanning-countries.ts";
 
 export default async function updatePlayers() {
   const countries = await getTrackedCountries();

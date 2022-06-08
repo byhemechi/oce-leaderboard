@@ -1,4 +1,4 @@
-import supabase from "./client";
+import supabase from "./client.ts";
 
 export default async function getTrackedCountries() {
   const { data, status } = await supabase
