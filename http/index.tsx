@@ -7,6 +7,8 @@ import { serve } from "https://deno.land/std@0.114.0/http/server.ts";
 import { h, ssr, tw } from "https://crux.land/nanossr@0.0.1";
 import supabase from "../lib/client.ts";
 
+import { Helmet } from "https://deno.land/x/nano_jsx/mod.ts";
+
 interface PlayerBasic {
   rank: number;
   scoresaber_id: number;
@@ -22,6 +24,9 @@ const PlayerTable = ({
   page: number;
 }) => (
   <div class={tw`max-w-screen-lg mx-auto`}>
+    <Helmet>
+      <title>OCE Leaderboard page {page + 1}</title>
+    </Helmet>
     <table class={tw`w-full`}>
       <thead>
         <tr class={tw`text-left border-b-2`}>
