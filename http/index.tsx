@@ -32,7 +32,9 @@ const PlayerTable = ({
 }) => (
   <div class={tw`max-w-screen-lg mx-auto`}>
     <Helmet>
-      <title>OCE Leaderboard page {page + 1}</title>
+      <title>
+        OCE Beat Saber Leaderboard{page > 0 ? ` page ${page + 1}` : ""}
+      </title>
     </Helmet>
     <Pagination page={page} />
     <table class={tw`w-full`}>
