@@ -3,10 +3,9 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
-import { serve } from "https://deno.land/std@0.114.0/http/server.ts";
 import { h, ssr, tw } from "https://crux.land/nanossr@0.0.1";
 import supabase from "../lib/client.ts";
-
+import ms from "https://esm.sh/ms@2.1.3";
 import { Helmet } from "https://deno.land/x/nano_jsx/mod.ts";
 
 interface PlayerBasic {
@@ -66,8 +65,33 @@ const Pagination = ({ page }: { page: number }) => (
   </form>
 );
 
-const handler = async (req: Request) => {
-  const url = new URL(req.url);
+let lastUpdated = 0;
+const delay = ms("1m");
+
+const handler =
+  (updateFunction: () => Promise<string[]>) => async (req: Request) => {
+    const url = new URL(req.url);
+    switch (url.pathname) {
+      case "/":
+        return await playerTable(url);
+      case "/update_leaderboards":
+        if (Date.now() - lastUpdated >= delay) {
+          lastUpdated = Date.now();
+          return new Response((await updateFunction()).join("\n"));
+        } else {
+          return new Response(
+            `please wait ${ms(lastUpdated + delay - Date.now())}`,
+            { status: 429 }
+          );
+        }
+      default:
+        return new Response("Not Found", { status: 404 });
+    }
+  };
+
+export default handler;
+
+async function playerTable(url: URL) {
   const page = parseInt(url.searchParams.get("page") ?? "1") - 1;
   const pageSize = 50;
   const { data: players } = await supabase
@@ -77,6 +101,4 @@ const handler = async (req: Request) => {
   return ssr(() => (
     <PlayerTable players={players as PlayerBasic[]} page={page} />
   ));
-};
-
-export default handler;
+}
