@@ -1,5 +1,8 @@
-import updatePlayers from "./lib/update-players.ts";
-import handler from "./http/index.tsx";
-import { serve } from "https://deno.land/std@0.114.0/http/server.ts";
+import updateLeaderboardRoute from "./http/update-leaderboards.ts";
+import tablePage from "./http/rankings.tsx";
+import { serve } from "https://deno.land/x/sift@0.5.0/mod.ts";
 
-await serve(handler(updatePlayers), { addr: "0.0.0.0:3000" });
+serve({
+  "/": tablePage,
+  "/update_leaderboards": updateLeaderboardRoute,
+});

@@ -90,31 +90,12 @@ const Pagination = ({ page }: { page: number }) => (
   </form>
 );
 
-let lastUpdated = 0;
-const delay = ms("1m");
+const rankingPageHandler = async (req: Request) => {
+  const url = new URL(req.url);
+  return await playerTable(url);
+};
 
-const handler =
-  (updateFunction: () => Promise<string[]>) => async (req: Request) => {
-    const url = new URL(req.url);
-    switch (url.pathname) {
-      case "/":
-        return await playerTable(url);
-      case "/update_leaderboards":
-        if (Date.now() - lastUpdated >= delay) {
-          lastUpdated = Date.now();
-          return new Response((await updateFunction()).join("\n"));
-        } else {
-          return new Response(
-            `please wait ${ms(lastUpdated + delay - Date.now())}`,
-            { status: 429 }
-          );
-        }
-      default:
-        return new Response("Not Found", { status: 404 });
-    }
-  };
-
-export default handler;
+export default rankingPageHandler;
 
 async function playerTable(url: URL) {
   const page = parseInt(url.searchParams.get("page") ?? "1") - 1;
