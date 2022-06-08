@@ -61,8 +61,8 @@ const PlayerTable = ({
                   alt="avatar"
                   loading="lazy"
                 />
-                {toEmojiFlag(player.country)}
-                {player.name}
+                <span>{toEmojiFlag(player.country)}</span>
+                <span>{player.name}</span>
               </a>
             </td>
             <td class={tw`text-right`}>{player.pp}</td>
