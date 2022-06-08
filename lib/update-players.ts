@@ -4,7 +4,7 @@ import getPlayer from "./get-player.ts";
 import getTrackedCountries from "./get-scanning-countries.ts";
 
 export default async function updatePlayers() {
-  const countries = await getTrackedCountries();
+  const countries = getTrackedCountries();
   for (let page = 1; page <= 1; ++page) {
     const pageData = await getLeaderboard(
       countries?.map((i) => i.name) ?? [],
@@ -14,7 +14,7 @@ export default async function updatePlayers() {
     console.log(`page ${page}`);
 
     await supabase.from("player").upsert(
-      pageData.players.map((data, n) => ({
+      pageData.players.map((data) => ({
         data,
       }))
     );

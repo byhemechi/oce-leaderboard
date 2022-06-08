@@ -1,9 +1,12 @@
-import supabase from "./client.ts";
+const getTrackedCountries = (): {
+  name: string;
+  extra_players?: (string | null)[];
+}[] => [
+  {
+    name: "AU",
+    extra_players: ["76561198404774259", "76561198417639620"],
+  },
+  { name: "NZ" },
+];
 
-export default async function getTrackedCountries() {
-  const { data, status } = await supabase
-    .from("country")
-    .select("name, extra_players");
-  if (status !== 200) return null;
-  return data as { name: string; extra_players: (number | null)[] }[];
-}
+export default getTrackedCountries;
