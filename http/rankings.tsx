@@ -70,7 +70,13 @@ const PlayerTable = ({
                   <span>{player.name}</span>
                 </a>
               </td>
-              <td class={tw`text-right`}>{player.pp}</td>
+              <td class={tw`text-right`}>
+                {parseFloat(player.pp).toLocaleString("en-AU", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+                pp
+              </td>
             </tr>
           ))}
         </tbody>
