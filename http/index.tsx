@@ -10,10 +10,18 @@ import { Helmet } from "https://deno.land/x/nano_jsx/mod.ts";
 
 interface PlayerBasic {
   rank: number;
-  scoresaber_id: number;
+  scoresaber_id: string;
+  country: string;
   name: string;
   pp: string;
 }
+
+const toEmojiFlag = (countryCode: string): string =>
+  countryCode
+    .toLowerCase()
+    .replace(/[a-z]/g, (i) =>
+      String.fromCodePoint((i.codePointAt(0) ?? 0) - 97 + 0x1f1e6)
+    );
 
 const PlayerTable = ({
   players,
@@ -26,6 +34,7 @@ const PlayerTable = ({
     <Helmet>
       <title>OCE Leaderboard page {page + 1}</title>
     </Helmet>
+    <Pagination page={page} />
     <table class={tw`w-full`}>
       <thead>
         <tr class={tw`text-left border-b-2`}>
@@ -38,7 +47,21 @@ const PlayerTable = ({
         {players.map((player) => (
           <tr class={tw`border-b-2`}>
             <td>{player.rank}</td>
-            <td class={tw`py-2`}>{player.name}</td>
+            <td class={tw`py-2`}>
+              <a
+                href={`https://scoresaber.com/u/${player.scoresaber_id}`}
+                class={tw`flex h-8 items-center gap-2`}
+              >
+                <img
+                  src={`https://cdn.scoresaber.com/avatars/${player.scoresaber_id}.jpg`}
+                  class={tw`h-8 w-8 rounded-full`}
+                  alt="avatar"
+                  loading="lazy"
+                />
+                {toEmojiFlag(player.country)}
+                {player.name}
+              </a>
+            </td>
             <td class={tw`text-right`}>{player.pp}</td>
           </tr>
         ))}
@@ -49,7 +72,7 @@ const PlayerTable = ({
 );
 
 const Pagination = ({ page }: { page: number }) => (
-  <form method="get" class={tw`flex justify-between p-4`}>
+  <form method="get" class={tw`flex justify-between p-2`}>
     <button
       type="submit"
       name="page"
