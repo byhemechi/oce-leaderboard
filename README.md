@@ -2,8 +2,6 @@
 
 App to generate Beat Saber leaderboards for the OCE region
 
-![screenshot](https://user-images.githubusercontent.com/25940563/172539566-8148dfa0-d287-4b2a-80c6-49b2796690c3.svg)
-
 ## Local development
 
 ```bash
