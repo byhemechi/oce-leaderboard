@@ -35,6 +35,7 @@ const PlayerTable = ({
       <title>
         OCE Beat Saber Leaderboard{page > 0 ? ` page ${page + 1}` : ""}
       </title>
+      <link rel="shortcut icon" href="/OCEBeatSaber.svg" />
     </Helmet>
     <Pagination page={page} />
     <table class={tw`w-full`}>
