@@ -28,7 +28,7 @@ export default async function updatePlayers() {
       log.push(`Updated player ${player}`);
       return playerData;
     }),
-    ...new Array(1).fill(null).map(async (_i, page) => {
+    ...new Array(pages).fill(null).map(async (_i, page) => {
       const pageData = await getLeaderboard(
         countries?.map((i) => i.name) ?? [],
         page + 1
