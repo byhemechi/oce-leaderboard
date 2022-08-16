@@ -41,5 +41,10 @@ export default async function updatePlayers() {
   await supabase
     .from("player")
     .upsert([...updated.flat(Infinity).map((i) => ({ data: i }))]);
+
+  await supabase.rpc("update_leaderboards");
+  log.push("Refreshed leaderboard");
+  await supabase.rpc("update_firsts");
+  log.push("Refreshed firsts");
   return log;
 }
