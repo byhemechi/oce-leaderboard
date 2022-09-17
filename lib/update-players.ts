@@ -5,7 +5,7 @@ import getTrackedCountries from "./get-scanning-countries.ts";
 
 export default async function updatePlayers() {
   const countries = await getTrackedCountries();
-  const pages = 20;
+  const pages = 40;
   const log: string[] = [];
   console.log("Updating player data...");
 
